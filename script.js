@@ -1,11 +1,9 @@
-//your code here
 const draggables = document.querySelectorAll('.draggable');
 let draggedElement = null;
 
 draggables.forEach(draggable => {
-    draggable.addEventListener('dragstart', function (e) {
+    draggable.addEventListener('dragstart', function () {
         draggedElement = this;
-        e.dataTransfer.setData('text/plain', this.id);
     });
 
     draggable.addEventListener('dragover', function (e) {
@@ -14,11 +12,16 @@ draggables.forEach(draggable => {
 
     draggable.addEventListener('drop', function (e) {
         e.preventDefault();
-        if (draggedElement !== this) {
+        if (draggedElement && draggedElement !== this) {
             let tempBg = this.style.backgroundImage;
             this.style.backgroundImage = draggedElement.style.backgroundImage;
             draggedElement.style.backgroundImage = tempBg;
         }
     });
+
+    draggable.addEventListener('dragend', function () {
+        draggedElement = null;
+    });
 });
+
 
